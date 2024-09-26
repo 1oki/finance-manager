@@ -1,3 +1,22 @@
+Project structure 
+
+finance-app/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── AddTransactionForm.tsx    # Transaction add form
+│   │   ├── TransactionList.tsx       # Transactions list
+│   │   ├── Charts.tsx                # Graphics components
+│   ├── redux/
+│   │   ├── slices/
+│   │   │   ├── transactionsSlice.ts  # Redux Slice for transaction management
+│   ├── App.tsx                       # Main component
+│   ├── store.ts                      # Redux Store config
+│   └── index.tsx                     # Entry point
+├── package.json
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
