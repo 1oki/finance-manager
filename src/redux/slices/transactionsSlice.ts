@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Transaction {
-  id?: string;
+  id: string;
 //   type: 'income' | 'expense';
   type: string;
 //   amount: number;
@@ -10,12 +10,22 @@ interface Transaction {
   date: string;
 }
 
+const saveToLocalStorage = (transactions: Transaction[]) => {
+  localStorage.setItem("transactions", JSON.stringify(transactions));
+};
+
+const loadFromLocalStorage = (): Transaction[] => {
+  const storedTransactions = localStorage.getItem("transactions");
+  return storedTransactions ? JSON.parse(storedTransactions) : [];
+};
+
+
 interface TransactionsState {
   transactions: Transaction[];
 }
 
 const initialState: TransactionsState = {
-  transactions: [],
+  transactions: loadFromLocalStorage(),
 };
 
 const transactionsSlice = createSlice({
@@ -24,9 +34,11 @@ const transactionsSlice = createSlice({
   reducers: {
     addTransaction: (state, action: PayloadAction<Transaction>) => {
       state.transactions.push({ ...action.payload, id: String(state.transactions.length + 1) });
+      saveToLocalStorage(state.transactions);
     },
     removeTransaction: (state, action: PayloadAction<string>) => {
       state.transactions = state.transactions.filter(t => t.id !== action.payload);
+      saveToLocalStorage(state.transactions);
     },
   },
 });

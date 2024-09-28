@@ -4,6 +4,17 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { addTransaction } from "../redux/slices/transactionsSlice";
 
+interface Transaction {
+    id: string;
+  //   type: 'income' | 'expense';
+    type: string;
+  //   amount: number;
+    amount: string;
+    category: string;
+    date: string;
+  }
+
+
 const AddTransactionForm = () => {
   const dispatch = useDispatch();
 
@@ -16,13 +27,14 @@ const AddTransactionForm = () => {
 
   return (
     <Formik
-      initialValues={{ type: "income", amount: "", category: "", date: "" }}
+      initialValues={{ id: "", type: "income", amount: "", category: "", date: "" }}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
-        console.log('values',values)
-        // values.id= {}
-        // dispatch(addTransaction(values));
-        // resetForm();
+        values.id = Date.now().toString();
+        // console.log('values',values)
+        // console.log('Date.now().toString()',Date.now().toString())
+        dispatch(addTransaction(values));
+        resetForm();
       }}
     >
       {() => (
