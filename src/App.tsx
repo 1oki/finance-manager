@@ -58,7 +58,6 @@ const App: React.FC = () => (
         <TransactionList />
         {/* <Charts /> */}
       </Content>
-      <Footer style={footerStyle}>Footer</Footer>
     </Layout>
   </div>
 );

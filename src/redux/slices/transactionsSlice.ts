@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Transaction, TransactionsState } from '../../types';
 
-interface Transaction {
-  id: string;
-//   type: 'income' | 'expense';
-  type: string;
-//   amount: number;
-  amount: string;
-  category: string;
-  date: string;
-}
+// interface Transaction {
+//   id: string;
+// //   type: 'income' | 'expense';
+//   type: string;
+// //   amount: number;
+//   amount: string;
+//   category: string;
+//   date: string;
+// }
 
 const saveToLocalStorage = (transactions: Transaction[]) => {
   localStorage.setItem("transactions", JSON.stringify(transactions));
@@ -20,9 +21,9 @@ const loadFromLocalStorage = (): Transaction[] => {
 };
 
 
-interface TransactionsState {
-  transactions: Transaction[];
-}
+// interface TransactionsState {
+//   transactions: Transaction[];
+// }
 
 const initialState: TransactionsState = {
   transactions: loadFromLocalStorage(),
