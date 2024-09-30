@@ -14,7 +14,7 @@ const TransactionList = () => {
         {transactions.map(transaction => (
           <li key={transaction.id}>
             {transaction.type} | {transaction.amount} | {transaction.category} | {transaction.date}
-            {/* <button onClick={() => dispatch(removeTransaction(transaction.id))}>Delete</button> */}
+            <button onClick={() => dispatch(removeTransaction(transaction.id))}>Delete</button>
           </li>
         ))}
       </ul>

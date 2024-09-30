@@ -3,9 +3,9 @@ import { Formik, Field, Form, ErrorMessage, FieldProps } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { addTransaction } from "../redux/slices/transactionsSlice";
-import { Form as AntForm, Input, Button, Select, DatePicker, Radio } from "antd";
+// import { Form as AntForm, Input, Button, Select, DatePicker, Radio } from "antd";
 import { Transaction, TransactionsState } from '../types';
-import 'antd/dist/reset.css';
+// import 'antd/dist/reset.css';
 
 // import { Button, Flex, Segmented } from 'antd';
 import type { FlexProps, SegmentedProps } from 'antd';
@@ -17,21 +17,6 @@ interface FormValues {
   date: string;
 }
 
-const boxStyle: React.CSSProperties = {
-  width: '100%',
-  height: 120,
-  borderRadius: 6,
-  border: '1px solid #40a9ff',
-};
-const fieldStyle: React.CSSProperties = {
-  width: '20%',
-  height: 30,
-  borderRadius: 6,
-  border: '1px solid #40a9ff',
-  // border: '1px solid red', borderRadius: '4px'
-};
-
-
 const AddTransactionForm = () => {
   const dispatch = useDispatch();
 
@@ -41,6 +26,7 @@ const AddTransactionForm = () => {
     type: Yup.string().oneOf(["income", "expense"]).required(" Required"),
     date: Yup.date().required(" Required"),
   });
+
 
   return (
     <Formik
@@ -55,137 +41,135 @@ const AddTransactionForm = () => {
     >
 
       {({ setFieldValue, values }) => (
-          <AntForm
-            layout="vertical"
-            style={{
-              maxWidth: 600,
-              margin: 'auto',
-              padding: '30px',
-              background: '#f5f5f5',
-              borderRadius: '8px',
-            }}
-          >
-            <AntForm.Item label="Transaction Type" name="type">
-              <Field name="type">
-                {( field : FormValues) => (
-                  <Radio.Group
-                    {...field}
-                    value = {values.type}
-                    defaultValue="income"
-                    onChange={(e) => setFieldValue("type", e.target.value)}
-                    style={{ width: '100%' }}
-                  >
-                    <Radio value="income">Income</Radio>
-                    <Radio value="expense">Expense</Radio>
-                  </Radio.Group>
-                )}
-              </Field>
-            </AntForm.Item>
+          <Form style={formStyle}>
+          {/* Тип транзакции */}
+          <div style={formGroupStyle}>
+            <label style={labelStyle}>Transaction Type</label>
+            <div role="group" style={radioGroupStyle}>
+              <label style={radioLabelStyle}>
+                <Field type="radio" name="type" value="income" />
+                Income
+              </label>
+              <label style={radioLabelStyle}>
+                <Field type="radio" name="type" value="expense" />
+                Expense
+              </label>
+            </div>
+          </div>
 
-            <AntForm.Item
-              label="Amount"
+          {/* Сумма */}
+          <div style={formGroupStyle}>
+            <label htmlFor="amount" style={labelStyle}>Amount</label>
+            <Field
               name="amount"
-              help={<ErrorMessage name="amount" component="div" />}
-            >
-              <Field name="amount">
-                {( {field} : FieldProps) => (
-                  <Input
-                    {...field}
-                    type="number"
-                    placeholder="Enter amount"
-                    style={{ padding: '8px', borderRadius: '4px' }}
-                  />
-                )}
-              </Field>
-            </AntForm.Item>
+              type="number"
+              placeholder="Enter amount"
+              style={inputStyle}
+            />
+            <ErrorMessage name="amount">
+              {msg => <div style={errorStyle}>{msg}</div>}
+            </ErrorMessage>
+          </div>
 
-            <AntForm.Item
-              label="Category"
+          {/* Категория */}
+          <div style={formGroupStyle}>
+            <label htmlFor="category" style={labelStyle}>Category</label>
+            <Field
               name="category"
-              help={<ErrorMessage name="category" component="div" />}
-            >
-              <Field name="category">
-                {( {field} : FieldProps) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    placeholder="Enter category"
-                    style={{ padding: '8px', borderRadius: '4px' }}
-                  />
-                )}
-              </Field>
-            </AntForm.Item>
+              type="text"
+              placeholder="Enter category"
+              style={inputStyle}
+            />
+            <ErrorMessage name="category">
+              {msg => <div style={errorStyle}>{msg}</div>}
+            </ErrorMessage>
+          </div>
 
-            <AntForm.Item
-              label="Date"
+          {/* Дата */}
+          <div style={formGroupStyle}>
+            <label htmlFor="date" style={labelStyle}>Date</label>
+            <Field
               name="date"
-              help={<ErrorMessage name="date" component="div"  />}
-            >
-              <Field name="date">
-                {( {field} :  FieldProps) => (
-                  <DatePicker
-                    {...field}
-                    onChange={(date, dateString) => setFieldValue("date", dateString)}
-                    style={{ width: '100%' }}
-                  />
-                )}
-              </Field>
-            </AntForm.Item>
+              render={({ field }: FieldProps) => (
+                <input
+                  {...field}
+                  type="date"
+                  style={inputStyle}
+                  value={values.date}
+                  onChange={(e) => setFieldValue("date", e.target.value)}
+                />
+              )}
+            />
+            <ErrorMessage name="date">
+              {msg => <div style={errorStyle}>{msg}</div>}
+            </ErrorMessage>
+          </div>
 
-            <AntForm.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{
-                  backgroundColor: '#4caf50',
-                  borderColor: '#4caf50',
-                  color: 'white',
-                  borderRadius: '5px',
-                  padding: '10px 15px',
-                  width: '100%',
-                }}
-              >
-                Add Transaction
-              </Button>
-            </AntForm.Item>
-          </AntForm>
+          {/* Кнопка для добавления транзакции */}
+          <div style={formGroupStyle}>
+            <button type="submit" style={buttonStyle}>
+              Add Transaction
+            </button>
+          </div>
+        </Form>
       )}
     </Formik>
   );
 };
 
+const formStyle: React.CSSProperties = {
+  maxWidth: '600px',
+  margin: 'auto',
+  padding: '30px',
+  background: '#f5f5f5',
+  borderRadius: '8px',
+  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+};
 
-      {/* {() => (
-        <Form>
-            <div>
-              <label htmlFor="type">Transaction Type </label>
-              <Radio.Group block defaultValue="income" optionType="button" buttonStyle="solid" >
-                <Radio value="income">Income</Radio>
-                <Radio value="expense">Expense</Radio>
-              </Radio.Group>
-            </div>
-            <div>
-              <label htmlFor="amount">Amount </label>
-              <Field name="amount" type="number" />
-              <ErrorMessage name="amount"/>
-            </div>
-            <div>
-              <label htmlFor="category">Category </label>
-              <Field name="category" type="text" style={fieldStyle}/>
-              <ErrorMessage name="category" />
-            </div>
-            <div>
-              <label htmlFor="date">Date </label>
-              <Field name="date" type="date" style={fieldStyle}/>
-              <ErrorMessage name="date" />
-            </div>
-            <div>
-              <Button type="primary">Add Transaction</Button>
-            </div>
-        </Form>
-      )}
-    </Formik>
-  );
-}; */}
+const formGroupStyle: React.CSSProperties = {
+  marginBottom: '15px',
+};
+
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  marginBottom: '5px',
+  fontWeight: 'bold',
+};
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '8px',
+  borderRadius: '4px',
+  border: '1px solid #ccc',
+  fontSize: '16px',
+};
+
+const radioGroupStyle: React.CSSProperties = {
+  display: 'flex',
+  justifyContent: 'space-around',
+  margin: '10px 0',
+};
+
+const radioLabelStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+};
+
+const errorStyle: React.CSSProperties = {
+  color: 'red',
+  fontSize: '18px',
+};
+
+const buttonStyle: React.CSSProperties = {
+  backgroundColor: '#4caf50',
+  borderColor: '#4caf50',
+  color: 'white',
+  borderRadius: '5px',
+  padding: '10px 15px',
+  fontSize: '16px',
+  width: '100%',
+  cursor: 'pointer',
+  border: 'none',
+};
 
 export default React.memo(AddTransactionForm);

@@ -2,9 +2,10 @@ import React from "react";
 import AddTransactionForm from "./components/AddTransactionForm";
 import TransactionList from "./components/TransactionList";
 import Charts from "./components/Charts";
+import Header from "./components/Header";
 
-import { Flex, Layout } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+// import { Flex, Layout } from 'antd';
+// const { Header, Footer, Sider, Content } = Layout;
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -49,17 +50,11 @@ const layoutStyle = {
 
 const App: React.FC = () => (
   <div>
-    <Layout style={layoutStyle}>
-      <Header style={headerStyle}>
-        <h1>Personal Finance Manager</h1>       
-      </Header>
-      <Content style={contentStyle}>
-        <AddTransactionForm />
-        <TransactionList />
-        {/* <Charts /> */}
-      </Content>
-    </Layout>
-  </div>
+      <Header />
+      <AddTransactionForm />
+      <TransactionList />
+      <Charts />
+    </div>
 );
 
 export default App;
