@@ -3,6 +3,7 @@ import AddTransactionForm from "./components/AddTransactionForm";
 import TransactionList from "./components/TransactionList";
 import Charts from "./components/Charts";
 import Header from "./components/Header";
+import Svg from "./components/Svg";
 
 // import { Flex, Layout } from 'antd';
 // const { Header, Footer, Sider, Content } = Layout;
@@ -54,6 +55,7 @@ const App: React.FC = () => (
       <AddTransactionForm />
       <TransactionList />
       <Charts />
+      <Svg />
     </div>
 );
 
